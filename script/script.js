@@ -2,8 +2,11 @@
 
 let playerScore = 0;
 let computerScore = 0;
-let roundwinner = '';
-let playerSelection;
+let playerChoice = 0;
+let computerChoice = 0;
+let computerSelection = {Value: ""};
+let playerSelection = {Value: ""};
+
 
 const buttons = document.querySelectorAll('.btn');
 
@@ -13,58 +16,65 @@ player.textContent = 'Player Score: ${playerScore}';
 const computer = document.querySelector("#computer-score");
 player.textContent = 'Computer Score: ${computerScore}';
 
+const message = document.querySelector("#message")
+message.textContent = "May the Force be With You"
+
 buttons.forEach((button) => {
     button.addEventListener('click', ()=>{
-        let playerSelection = button.id;
+        let playerBtn = button.id;
         
-        if (playerSelection == "rock"){
+
+        if (playerBtn == "rock"){
             playerChoice = 0;
+            playerSelection.Value = "rock";
         }
-        if (playerSelection == "paper"){
+        if (playerBtn == "paper"){
             playerChoice = 1;
+            playerSelection.Value = "paper";
         }
-        if (playerSelection == "scissors"){
+        if (playerBtn == "scissors"){
             playerChoice = 2;
+            playerSelection.Value = "scissors";
         }
 
-        getComputerChoice();
+        computerChoice = getComputerChoice();
         playGame();
     })
 })
 
-function getComputerChoice(){
+function getComputerChoice(randomValue){
     randomValue = Math.floor(Math.random() * 3);
         if(randomValue == "0") {
-            return "rock";
+            computerSelection.Value = "rock";
         }
-        if(randomValue == "1") {
-            return "paper";
+        else if(randomValue == "1") {
+            computerSelection.Value = "paper";
         }
-        if(randomValue == "2") {
-            return "scissors";
+        else if(randomValue == "2") {
+            computerSelection.Value = "scissors";
         }
+        return randomValue;
+
 
 }
-function playRound(playerSelection, computerSelection) {
-    if(playerSelection === computerSelection) {
+function playRound() {
+    if(playerSelection == computerSelection) {
         roundwinner = 'tie';
-        output.textContent = 'Its a Tie! You both chose ${playerSelection}'
+        message.textContent = 'Its a Tie! You both chose ${playerSelection.Value}'
     }
 
-    if((playerSelection === 'ROCK' && computerSelection === 'SCISSORS') ||
-        (playerSelection === 'SCISSORS' && computerSelection ==='PAPER') ||
-        (playerSelection === 'PAPER' && computerSelection === 'ROCK')){
+    else if((playerSelection == 'rock' && computerSelection == 'scissors') ||
+        (playerSelection == 'scissors' && computerSelection =='paper') ||
+        (playerSelection == 'paper' && computerSelection == 'rock')){
             playerScore++;
-            roundwinner = 'player';
-            output.textContent = 'You Won! ${playerSelection} beats ${computerSelection}';
+            message.textContent = 'You Won! ${playerSelection.Value} beats ${computerSelection.Value}';
     }
 
-    if((playerSelection === 'SCISSORS' && computerSelection === 'ROCK') ||
-        (playerSelection === 'PAPER' && computerSelection ==='SCISSORS') ||
-        (playerSelection === 'ROCK' && computerSelection === 'PAPER')){
+    else if((playerSelection == 'scissors' && computerSelection == 'rock') ||
+        (playerSelection == 'paper' && computerSelection =='scissors') ||
+        (playerSelection == 'rock' && computerSelection == 'paper')){
             computerScore++;
-            roundwinner = 'computer';
-            output.textContent = 'You Lost! ${computerSelection} beats ${playerSelection}';
+            message.textContent = 'You Lost! ${computerSelection.Value} beats ${playerSelection.Value}';
     }
 
 
@@ -72,11 +82,10 @@ function playRound(playerSelection, computerSelection) {
 }
 
 
-const computerSelection = getComputerChoice();
+
 
 function playGame(){
     for (let i=0; i<=5; i++){
-        output.textContent = "Choose Rock, Paper or Scissors";
         playRound();
     }
 }
