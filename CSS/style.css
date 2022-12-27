@@ -1,3 +1,13 @@
 * {
-    
+    border: 2px red solid;
+
+}
+
+.btn{
+    max-width: 33%;
+    object-fit: fill;
+}
+
+img{
+    max-width: 100%;
 }
