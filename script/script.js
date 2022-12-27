@@ -37,6 +37,7 @@ function getComputerChoice(){
 function playRound(playerSelection, computerSelection) {
     if(playerSelection === computerSelection) {
         roundwinner = 'tie';
+        output.textContent = 'Its a Tie! You both chose ${playerSelection}'
     }
 
     if((playerSelection === 'ROCK' && computerSelection === 'SCISSORS') ||
@@ -44,6 +45,7 @@ function playRound(playerSelection, computerSelection) {
         (playerSelection === 'PAPER' && computerSelection === 'ROCK')){
             playerScore++;
             roundwinner = 'player';
+            output.textContent = 'You Won! ${playerSelection} beats ${computerSelection}';
     }
 
     if((playerSelection === 'SCISSORS' && computerSelection === 'ROCK') ||
@@ -51,6 +53,7 @@ function playRound(playerSelection, computerSelection) {
         (playerSelection === 'ROCK' && computerSelection === 'PAPER')){
             computerScore++;
             roundwinner = 'computer';
+            output.textContent = 'You Lost! ${computerSelection} beats ${playerSelection}';
     }
 
 
@@ -61,8 +64,9 @@ const playerSelection = button.id;
 const computerSelection = getComputerChoice();
 console.log(playRound(playerSelection, computerSelection));
 
-function game(playRound){
+function playGame(){
     for (let i=0; i<=5; i++){
-
+        output.textContent = "Choose Rock, Paper or Scissors";
+        playRound();
     }
 }
